@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#01030a">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Cerato Digital Cockpit</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="ice">
+<div id="viewport">
+<div id="stage">
+  <div id="bg"></div>
+
+  <!-- ============ BARRA SUPERIOR ============ -->
+  <header id="topbar">
+    <div id="topline"></div>
+    <svg id="topshape" viewBox="0 0 800 130" width="800" height="130" aria-hidden="true">
+      <defs>
+        <linearGradient id="tsg" x1="0" x2="1"><stop offset="0" stop-color="var(--accent)" stop-opacity="0"/><stop offset=".2" stop-color="var(--accent2)"/><stop offset=".8" stop-color="var(--accent2)"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient>
+        <filter id="tsb"><feGaussianBlur stdDeviation="4"/></filter>
+      </defs>
+      <path d="M0 116 L120 116 Q170 112 215 100 Q262 88 320 88 L480 88 Q538 88 585 100 Q630 112 680 116 L800 116" fill="none" stroke="url(#tsg)" stroke-width="7" filter="url(#tsb)" opacity=".8"/>
+      <path d="M0 116 L120 116 Q170 112 215 100 Q262 88 320 88 L480 88 Q538 88 585 100 Q630 112 680 116 L800 116" fill="none" stroke="url(#tsg)" stroke-width="2.4"/>
+    </svg>
+    <div id="tbLeft">
+      <button id="btnHome" class="tbicon" aria-label="Painel principal">
+        <svg viewBox="0 0 48 48" width="54" height="54"><path d="M24 6 4 24h6v17h10V30h8v11h10V24h6z" fill="currentColor"/></svg>
+      </button>
+      <span class="tbsep"></span>
+      <span id="tbTitle">Cerato</span>
+      <span id="srcPill" class="pill">DEMO</span>
+    </div>
+    <div id="tbClock"><span id="clock">--:--</span><span class="tbsep tall"></span><span id="date">---</span></div>
+    <div id="tbRight">
+      <button id="btnBt" class="tbicon" aria-label="Estado do OBD2">
+        <svg viewBox="0 0 32 48" width="34" height="52"><path d="M6 14 26 34 16 44V4l10 10L6 34" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      </button>
+      <button id="btnBell" class="tbicon" aria-label="Alertas">
+        <svg viewBox="0 0 48 48" width="46" height="46"><path d="M24 6c-7 0-12 5-12 12v8l-4 6h32l-4-6v-8c0-7-5-12-12-12zM19 38a5 5 0 0 0 10 0" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"/></svg>
+        <i id="bellDot"></i>
+      </button>
+      <button id="btnBright" class="tbicon" aria-label="Brilho">
+        <svg viewBox="0 0 48 48" width="50" height="50"><rect x="5" y="10" width="38" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="3.2"/><circle cx="24" cy="24" r="6" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ TELAS ============ -->
+  <main id="screens">
+
+    <!-- ---------- PAINEL ---------- -->
+    <section id="screen-dash" class="screen active">
+
+      <!-- camada esquerda: conta-giros + combustível -->
+      <div class="layer layerL">
+        <div class="dial" id="tachDial" style="left:2px;top:95px">
+          <div class="face" id="tachFace"></div>
+          <div class="needle" id="tachNeedle"></div>
+          <div class="dig">
+            <div class="unit u-top">x1000rpm</div>
+            <div class="big" id="tachDig">0.0</div>
+            <div class="unit u-bot">x1000rpm</div>
+          </div>
+        </div>
+        <svg class="tray trayL" viewBox="0 0 580 180" width="580" height="180" style="left:0;top:595px">
+          <defs>
+            <linearGradient id="trayfillL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#06122c"/><stop offset="1" stop-color="#02060f"/></linearGradient>
+            <filter id="trayglowL"><feGaussianBlur stdDeviation="5"/></filter>
+          </defs>
+          <path class="tray-glow" filter="url(#trayglowL)" d="M56 6 H524 Q550 6 550 32 V134 Q550 160 524 160 H56 Q30 160 30 134 V32 Q30 6 56 6Z"/>
+          <path class="tray-body" fill="url(#trayfillL)" d="M56 6 H524 Q550 6 550 32 V134 Q550 160 524 160 H56 Q30 160 30 134 V32 Q30 6 56 6Z"/>
+          <g id="fuelArc"></g>
+          <text x="98" y="102" class="lbl-ef">E</text>
+          <text x="482" y="102" class="lbl-ef">F</text>
+          <g class="ico" transform="translate(271 62) scale(.86)"><path d="M6 44V6a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v38M2 44h36M34 14l8 6v18a3 3 0 0 0 6 0V20l-6-8M10 10h20v12H10z" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/></g>
+        </svg>
+        <div class="trayval" style="left:0;top:694px;width:580px"><b id="fuelVal">--</b> <span id="fuelUnit">L</span><em id="fuelPct"></em></div>
+      </div>
+
+      <!-- camada central: marca, indicadores, carro -->
+      <div class="layer layerC">
+        <div id="wordmark"><span>CERATO</span><i>EX3 1.6 AT</i></div>
+
+        <div class="cell" style="left:595px;top:195px">
+          <svg class="cico" viewBox="0 0 56 56" width="56" height="56"><path d="M24 4h8v30a10 10 0 1 1-8 0z" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="28" cy="42" r="5" fill="currentColor"/><path d="M4 50q6-5 12 0t12 0 12 0 12 0" fill="none" stroke="currentColor" stroke-width="3"/></svg>
+          <div class="ctext"><label>Temp. Motor</label><div class="cval"><b id="cTemp">--</b><span id="cTempU">°C</span><u class="tag" id="tagTemp"></u></div></div>
+          <div class="cbar"><i id="cTempBar" class="fill"></i></div>
+        </div>
+        <div class="cell" style="left:865px;top:195px">
+          <svg class="cico" viewBox="0 0 56 56" width="56" height="56"><rect x="4" y="16" width="48" height="30" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><path d="M14 10v6M42 10v6M14 31h10M34 31h10M39 26v10" stroke="currentColor" stroke-width="3" fill="none"/></svg>
+          <div class="ctext"><label>Tensão Bat.</label><div class="cval"><b id="cVolt">--</b><span>V</span><u class="tag" id="tagVolt"></u></div></div>
+          <div class="cbar green"><i id="cVoltBar" class="fill"></i></div>
+        </div>
+        <div class="hdiv" style="left:600px;top:314px;width:470px"></div>
+        <div class="vdiv" style="left:840px;top:196px;height:104px"></div>
+        <div class="vdiv" style="left:840px;top:330px;height:84px"></div>
+        <div class="cell nobar" style="left:595px;top:326px">
+          <svg class="cico" viewBox="0 0 56 56" width="52" height="52"><path d="M8 50V10a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v40M4 50h36M36 18l10 7v20a3.5 3.5 0 0 0 7 0V25l-9-8M13 14h18v14H13z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/></svg>
+          <div class="ctext"><label>Consumo Médio</label><div class="cval"><b id="cAvg">--</b><span id="cAvgU">km/L</span><u class="tag" id="tagAvg"></u></div></div>
+        </div>
+        <div class="cell nobar" style="left:865px;top:326px">
+          <svg class="cico" viewBox="0 0 56 56" width="52" height="52"><path d="M8 50V10a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v40M4 50h36M36 18l10 7v20a3.5 3.5 0 0 0 7 0V25l-9-8M13 14h18v14H13z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/></svg>
+          <div class="ctext"><label>Cons. Instant.</label><div class="cval"><b id="cInst">--</b><span id="cInstU">km/L</span><u class="tag" id="tagInst"></u></div></div>
+        </div>
+        <div class="range">
+          <svg viewBox="0 0 56 56" width="64" height="64"><path d="M20 6 8 50M36 6l12 44M28 8v8M28 24v8M28 40v8" stroke="currentColor" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg>
+          <div class="ctext"><label>Autonomia</label><div class="cval"><b id="cRange">--</b><span id="cRangeU">km</span><u class="tag" id="tagRange"></u></div></div>
+        </div>
+        <div class="chip" id="chipGear" style="left:560px;top:598px"><label>Marcha</label><b id="gearVal">--</b><u class="tag" id="tagGear"></u></div>
+        <div class="chip" id="chipIat" style="left:1006px;top:598px"><label>Ar adm.</label><b><span id="iatVal">--</span><small id="iatU">°C</small></b><u class="tag" id="tagIat"></u></div>
+        <div id="roadglow"></div>
+        <div id="carwrap"></div>
+      </div>
+
+      <!-- camada direita: velocímetro + temperatura -->
+      <div class="layer layerR">
+        <div class="dial" id="speedDial" style="left:1083px;top:95px">
+          <div class="face" id="speedFace"></div>
+          <div class="needle" id="speedNeedle"></div>
+          <div class="dig">
+            <div class="unit u-top" id="speedUnitTop">km/h</div>
+            <div class="big" id="speedDig">0</div>
+            <div class="unit u-bot" id="speedUnitBot">km/h</div>
+          </div>
+        </div>
+        <svg class="tray trayR" viewBox="0 0 580 180" width="580" height="180" style="left:1092px;top:595px">
+          <defs>
+            <linearGradient id="trayfillR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#06122c"/><stop offset="1" stop-color="#02060f"/></linearGradient>
+            <filter id="trayglowR"><feGaussianBlur stdDeviation="5"/></filter>
+          </defs>
+          <path class="tray-glow" filter="url(#trayglowR)" d="M56 6 H524 Q550 6 550 32 V134 Q550 160 524 160 H56 Q30 160 30 134 V32 Q30 6 56 6Z"/>
+          <path class="tray-body" fill="url(#trayfillR)" d="M56 6 H524 Q550 6 550 32 V134 Q550 160 524 160 H56 Q30 160 30 134 V32 Q30 6 56 6Z"/>
+          <g id="tempArc"></g>
+          <text x="98" y="102" class="lbl-ef">C</text>
+          <text x="482" y="102" class="lbl-ef">H</text>
+          <g class="ico" transform="translate(274 62) scale(.86)"><path d="M16 4h8v26a9 9 0 1 1-8 0z" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="20" cy="38" r="4" fill="currentColor"/><path d="M0 50q5-4 10 0t10 0 10 0 10 0" fill="none" stroke="currentColor" stroke-width="3"/></g>
+        </svg>
+        <div class="trayval" style="left:1092px;top:694px;width:580px"><b id="trayTemp">--</b> <span id="trayTempU">°C</span></div>
+      </div>
+    </section>
+
+    <section id="screen-trip" class="screen"></section>
+    <section id="screen-engine" class="screen"></section>
+    <section id="screen-alerts" class="screen"></section>
+    <section id="screen-settings" class="screen"></section>
+  </main>
+
+  <!-- ============ BARRA DE NAVEGAÇÃO ============ -->
+  <nav id="nav">
+    <button class="tab active" data-go="dash">
+      <svg viewBox="0 0 56 56" width="62" height="62"><path d="M8 44a22 22 0 1 1 40 0" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><path d="M28 36 38 20" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><circle cx="28" cy="38" r="4" fill="currentColor"/></svg>
+      <span>Painel</span></button>
+    <button class="tab" data-go="trip">
+      <svg viewBox="0 0 56 56" width="62" height="62"><path d="M8 46h40M12 46V30h8v16M24 46V12h8v34M36 46V22h8v24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      <span>Viagem</span></button>
+    <button class="tab" data-go="engine">
+      <svg viewBox="0 0 56 56" width="62" height="62"><path d="M10 22h8l4-6h14v6h6v-4h6v20h-6v-4h-6v8H22l-4-6h-8z" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"/><path d="M4 26v12" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg>
+      <span>Motor</span></button>
+    <button class="tab" data-go="alerts">
+      <svg viewBox="0 0 56 56" width="62" height="62"><path d="M28 6 52 48H4z" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round"/><path d="M28 22v14" stroke="currentColor" stroke-width="3.6" stroke-linecap="round"/><circle cx="28" cy="42" r="2.6" fill="currentColor"/></svg>
+      <span>Alertas</span><i class="tabdot" id="tabDot"></i></button>
+    <button class="tab" data-go="settings">
+      <svg viewBox="0 0 56 56" width="62" height="62"><path d="M23 4h10l2 7 5 3 7-2 5 9-5 5v6l5 5-5 9-7-2-5 3-2 7H23l-2-7-5-3-7 2-5-9 5-5v-6l-5-5 5-9 7 2 5-3z" transform="translate(0 0) scale(.9) translate(3 3)" fill="currentColor"/><circle cx="28" cy="28" r="7" fill="#04102a"/></svg>
+      <span>Configurações</span></button>
+  </nav>
+
+  <!-- ============ ALERTA ATIVO ============ -->
+  <div id="alertBanner" role="alert"><svg viewBox="0 0 56 56" width="46" height="46"><path d="M28 6 52 48H4z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M28 22v14" stroke="currentColor" stroke-width="4.4" stroke-linecap="round"/><circle cx="28" cy="42" r="3" fill="currentColor"/></svg><div><b id="abTitle"></b><span id="abText"></span></div><em>toque para silenciar</em></div>
+</div>
+<div id="dim"></div>
+</div>
+
+<!-- núcleo -->
+<script src="js/core.js"></script>
+<script src="js/config.js"></script>
+<script src="js/units.js"></script>
+<script src="js/derived.js"></script>
+<script src="js/trip.js"></script>
+<script src="js/alerts.js"></script>
+<!-- fontes de dados -->
+<script src="js/sources/demo.js"></script>
+<script src="js/sources/elm327.js"></script>
+<script src="js/sources/transport-emulator.js"></script>
+<script src="js/sources/transport-bridge.js"></script>
+<script src="js/sources/transport-webbluetooth.js"></script>
+<script src="js/sources/obd.js"></script>
+<!-- interface -->
+<script src="js/ui/widgets.js"></script>
+<script src="js/ui/gauges.js"></script>
+<script src="js/ui/car.js"></script>
+<script src="js/ui/dash.js"></script>
+<script src="js/ui/trip-screen.js"></script>
+<script src="js/ui/engine-screen.js"></script>
+<script src="js/ui/alerts-screen.js"></script>
+<script src="js/ui/settings-screen.js"></script>
+<script src="js/ui/shell.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
